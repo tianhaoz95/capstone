@@ -1,2 +1,5 @@
 __pycache__
 capstonenv
+.DS_Store
+/data/html_files
+/data/tex_files
