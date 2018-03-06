@@ -6,18 +6,26 @@ from bs4 import BeautifulSoup
 def list_tex_dest_paths(root):
     html_root = root + '/html_files'
     tex_root = root + '/tex_files'
-    tex_names = os.listdir(tex_root)
+    raw_tex_names = os.listdir(tex_root)
+    tex_names = []
+    for raw_tex_name in raw_tex_names:
+        if os.path.isdir(tex_root + '/' + raw_tex_name):
+            tex_names.append(raw_tex_name)
     tex_paths = [tex_root + '/' + tex_name for tex_name in tex_names]
     html_paths = [html_root + '/' + tex_name for tex_name in tex_names]
+    html_filenames = [html_root + '/' + tex_name + '/output.html' for tex_name in tex_names]
     tex_filenames = []
     for tex_path in tex_paths:
         filenames = os.listdir(tex_path)
-        tex_filename = None
-        for filename in filenames:
-            if '.tex' in filename:
-                tex_filename = filename
+        tex_filename = tex_path
+        if 'main.tex' in filenames:
+            tex_filename = tex_filename + '/main.tex'
+        else:
+            for filename in filenames:
+                if '.tex' in filename:
+                    tex_filename = tex_filename + '/' + filename
         tex_filenames.append(tex_filename)
-    return tex_filenames, tex_paths, html_paths
+    return tex_filenames, html_filenames, tex_paths, html_paths, tex_names
 
 def convert_tex_to_html(tex_path, dest_path):
     test_commands = [

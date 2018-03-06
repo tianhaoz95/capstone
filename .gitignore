@@ -1,6 +1,12 @@
 __pycache__
 capstonenv
 .DS_Store
-/data/html_files
-/data/tex_files
-/data/xml_files
+*.pyc
+/data/html_files/*
+/data/tex_files/*
+/data/xml_files/*
+/data/json_files/*
+!/data/html_files/README.md
+!/data/json_files/README.md
+!/data/tex_files/README.md
+!/data/xml_files/README.md
