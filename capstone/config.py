@@ -8,3 +8,5 @@ json_files_root = data_root + '/json_files'
 json_output_filename = json_files_root + '/output.json'
 
 symlist_filename = 'data/symlist.txt'
+
+output_root = data_root + '/outputs'

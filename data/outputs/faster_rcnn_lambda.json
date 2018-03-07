@@ -1,0 +1,153 @@
+{
+  "doc_name": "faster_rcnn",
+  "symbol_expr": "\\lambda",
+  "sentences": [
+    {
+      "type": "text",
+      "expr": "$\\displaystyle+\\lambda\\frac{1}{N_{\\mathit{reg}}}\\sum_{i}p^{*}_{i}L_{\\mathit{reg%\n}}(t_{i},t^{*}_{i})$",
+      "word_idx": 20623,
+      "sentence_idx": 240,
+      "label": "unlabeled"
+    },
+    {
+      "type": "math",
+      "expr": "$$\\displaystyle+\\lambda\\frac{1}{N_{\\mathit{reg}}}\\sum_{i}p^{*}_{i}L_{\\mathit{reg%\n}}(t_{i},t^{*}_{i}).$$",
+      "word_idx": 20724,
+      "sentence_idx": 241,
+      "label": "unlabeled"
+    },
+    {
+      "type": "text",
+      "expr": "The two terms are normalized by  $N_{\\mathit{cls}}$  and  $N_{\\mathit{reg}}$  and weighted by a balancing parameter  $\\lambda$ ",
+      "word_idx": 21932,
+      "sentence_idx": 261,
+      "label": "unlabeled"
+    },
+    {
+      "type": "text",
+      "expr": " By default we set  $\\lambda=10$ , and thus both  cls  and  reg  terms are roughly equally weighted",
+      "word_idx": 22325,
+      "sentence_idx": 264,
+      "label": "unlabeled"
+    },
+    {
+      "type": "text",
+      "expr": " We show by experiments that the results are insensitive to the values of  $\\lambda$  in a wide range (Table  9 )",
+      "word_idx": 22424,
+      "sentence_idx": 265,
+      "label": "unlabeled"
+    },
+    {
+      "type": "math",
+      "expr": "$$\\lambda$$",
+      "word_idx": 22654,
+      "sentence_idx": 269,
+      "label": "unlabeled"
+    },
+    {
+      "type": "math",
+      "expr": "$$\\lambda=10$$",
+      "word_idx": 22713,
+      "sentence_idx": 274,
+      "label": "unlabeled"
+    },
+    {
+      "type": "math",
+      "expr": "$$\\lambda$$",
+      "word_idx": 22723,
+      "sentence_idx": 275,
+      "label": "unlabeled"
+    },
+    {
+      "type": "text",
+      "expr": " The default setting of using  $\\lambda=10$  (69",
+      "word_idx": 46741,
+      "sentence_idx": 857,
+      "label": "unlabeled"
+    },
+    {
+      "type": "text",
+      "expr": "different values of  $\\lambda$",
+      "word_idx": 46833,
+      "sentence_idx": 860,
+      "label": "unlabeled"
+    },
+    {
+      "type": "math",
+      "expr": "$$\\lambda$$",
+      "word_idx": 46863,
+      "sentence_idx": 861,
+      "label": "unlabeled"
+    },
+    {
+      "type": "math",
+      "expr": "$$\\lambda=10$$",
+      "word_idx": 46870,
+      "sentence_idx": 862,
+      "label": "unlabeled"
+    },
+    {
+      "type": "math",
+      "expr": "$$\\lambda$$",
+      "word_idx": 46890,
+      "sentence_idx": 864,
+      "label": "unlabeled"
+    },
+    {
+      "type": "text",
+      "expr": "In Table  9  we compare different values of  $\\lambda$  in Equation ( 1 )",
+      "word_idx": 48539,
+      "sentence_idx": 909,
+      "label": "unlabeled"
+    },
+    {
+      "type": "text",
+      "expr": " By default we use  $\\lambda=10$  which makes the two terms in Equation ( 1 ) roughly equally weighted after normalization",
+      "word_idx": 48612,
+      "sentence_idx": 910,
+      "label": "unlabeled"
+    },
+    {
+      "type": "text",
+      "expr": " Table  9  shows that our result is impacted just marginally (by  $\\sim 1\\%$ ) when  $\\lambda$  is within a scale of about two orders of magnitude (1 to 100)",
+      "word_idx": 48734,
+      "sentence_idx": 911,
+      "label": "unlabeled"
+    },
+    {
+      "type": "text",
+      "expr": " This demonstrates that the result is insensitive to  $\\lambda$  in a wide range",
+      "word_idx": 48891,
+      "sentence_idx": 912,
+      "label": "unlabeled"
+    },
+    {
+      "type": "math",
+      "expr": "$$\\lambda$$",
+      "word_idx": 48971,
+      "sentence_idx": 913,
+      "label": "unlabeled"
+    },
+    {
+      "type": "math",
+      "expr": "$$\\lambda=10$$",
+      "word_idx": 48978,
+      "sentence_idx": 914,
+      "label": "unlabeled"
+    },
+    {
+      "type": "math",
+      "expr": "$$\\lambda$$",
+      "word_idx": 48996,
+      "sentence_idx": 916,
+      "label": "unlabeled"
+    },
+    {
+      "type": "math",
+      "expr": "$$\\lambda$$",
+      "word_idx": 49003,
+      "sentence_idx": 917,
+      "label": "unlabeled"
+    }
+  ]
+}

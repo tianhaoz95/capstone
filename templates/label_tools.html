@@ -4,7 +4,7 @@
 {% include "header.html" %}
 
 <body>
-    <p>Test</p>
+    <h2>Labeling tools</h2>
     <form method="post">
       <div class="row">
         <div class="col">
@@ -21,16 +21,19 @@
       </div>
     </form>
 
-    <form>
-      <button type="submit" name="btn_name" class="btn btn-primary fullbtn" value="modify"/>
-        Save changes to overall json file
-      </button>
-      <button type="submit" name="btn_name" class="btn btn-primary fullbtn" value="modify"/>
-        Save changes to separate json file
-      </button>
-    </form>
-
     <form method="post">
+      <div class="row savebtns">
+        <div class="col">
+          <button type="submit" name="btn_name" class="btn btn-primary fullbtn" value="save_overall"/>
+            Save changes to overall json file
+          </button>
+        </div>
+        <div class="col">
+          <button type="submit" name="btn_name" class="btn btn-primary fullbtn" value="save_separate"/>
+            Save changes to separate json file
+          </button>
+        </div>
+      </div>
       {% for sentence in sentence_list %}
         <div class="card exprcard">
           <div class="card-body">
