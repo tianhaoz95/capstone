@@ -6,7 +6,6 @@ def save_to_file(file_format, filename, data):
             json.dump(data, outfile)
     if file_format == 'csv':
         print('not implemented')
-        return None
 
 def load_from_file(file_format, filename):
     if file_format == 'json':
@@ -16,4 +15,3 @@ def load_from_file(file_format, filename):
         return dataset
     if file_format == 'csv':
         print('not implemented')
-        return None

@@ -7,7 +7,7 @@
       "expr": "$\\displaystyle+\\lambda\\frac{1}{N_{\\mathit{reg}}}\\sum_{i}p^{*}_{i}L_{\\mathit{reg%\n}}(t_{i},t^{*}_{i})$",
       "word_idx": 20623,
       "sentence_idx": 240,
-      "label": "unlabeled"
+      "label": "unlabeled+test+test+test"
     },
     {
       "type": "math",

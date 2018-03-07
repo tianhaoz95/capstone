@@ -1,4 +1,5 @@
 import os
+import json
 import subprocess as sp
 import pandas as pd
 from bs4 import BeautifulSoup
@@ -30,20 +31,22 @@ def list_tex_dest_paths(root):
     for raw_tex_name in raw_tex_names:
         if os.path.isdir(tex_root + '/' + raw_tex_name):
             tex_names.append(raw_tex_name)
-    tex_paths = [tex_root + '/' + tex_name for tex_name in tex_names]
-    html_paths = [html_root + '/' + tex_name for tex_name in tex_names]
-    html_filenames = [html_root + '/' + tex_name + '/output.html' for tex_name in tex_names]
+    tex_paths = []
+    html_paths = []
+    html_filenames = []
     tex_filenames = []
-    for tex_path in tex_paths:
-        filenames = os.listdir(tex_path)
-        tex_filename = tex_path
-        if 'main.tex' in filenames:
-            tex_filename = tex_filename + '/main.tex'
-        else:
-            for filename in filenames:
-                if '.tex' in filename:
-                    tex_filename = tex_filename + '/' + filename
+    for tex_name in tex_names:
+        metadata = None
+        with open(tex_root + '/' + tex_name + '/meta.json', 'r') as metafile:
+            metadata = json.loads(metafile.read())
+        tex_path = tex_root + '/' + tex_name
+        tex_filename = tex_path + '/' + metadata['tex_filename']
+        html_path = html_root + '/' + tex_name
+        html_filename = html_root + '/' + tex_name + '/output.html'
+        tex_paths.append(tex_path)
         tex_filenames.append(tex_filename)
+        html_paths.append(html_path)
+        html_filenames.append(html_filename)
     return tex_filenames, html_filenames, tex_paths, html_paths, tex_names
 
 def convert_tex_to_html(tex_path, dest_path):

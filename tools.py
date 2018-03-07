@@ -4,6 +4,10 @@ from flask import request
 from capstone.store import *
 from capstone.config import *
 from capstone.util import *
+import webbrowser
+
+url = 'http://127.0.0.1:5000/'
+
 app = Flask(__name__)
 
 dataset = load_from_file(file_format='json', filename=json_output_filename)
@@ -13,6 +17,8 @@ current_doc_name = None
 current_symbol_expr = None
 
 symbol_detector = SymbolDetector(symlist_filename=symlist_filename)
+
+webbrowser.open_new(url)
 
 @app.route('/', methods=['POST', 'GET'])
 def labeling():
@@ -43,9 +49,33 @@ def labeling():
             save_to_file(file_format='json', filename=json_output_filename, data=dataset)
             return render_template('label_tools.html', sentence_list=[])
         if action_type == 'save_separate':
-            print('save separate file')
             data = dict(request.form)
             del data['btn_name']
+            output_sentences = []
+            for key, val in data.items():
+                idx = int(key)
+                label = val
+                sentence = dataset[current_doc_name][idx]
+                sentence['label'] = label[0]
+                output_sentences.append(sentence)
+            output_data = {
+                'doc_name': current_doc_name,
+                'symbol_expr': current_symbol_expr,
+                'sentences': output_sentences
+            }
+            symbol_field = current_symbol_expr
+            symbol_field = symbol_field.replace('\\', '')
+            output_filename = output_root + '/' + current_doc_name + '_' + symbol_field + '.json'
+            save_to_file(file_format='json', filename=output_filename, data=output_data)
+            return render_template('label_tools.html', sentence_list=[])
+        if action_type == 'save_both':
+            data = dict(request.form)
+            del data['btn_name']
+            for key, val in data.items():
+                idx = int(key)
+                label = val
+                dataset[current_doc_name][idx]['label'] = label[0]
+            save_to_file(file_format='json', filename=json_output_filename, data=dataset)
             output_sentences = []
             for key, val in data.items():
                 idx = int(key)
