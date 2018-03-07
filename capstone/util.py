@@ -3,6 +3,25 @@ import subprocess as sp
 import pandas as pd
 from bs4 import BeautifulSoup
 
+def filter_by_doc_symbol(dataset, symbol_detector, doc_name, symbol_expr):
+    if not doc_name in dataset:
+        return 'doc_not_exist', None
+    doc = dataset[doc_name]
+    filtered_sentences = []
+    for sentence in doc:
+        expr = sentence['expr']
+        sentence_idx = sentence['sentence_idx']
+        label = sentence['label']
+        if symbol_detector.detect_symbol(expr, symbol_expr):
+            filtered_sentences.append({
+                'expr': expr,
+                'sentence_idx': sentence_idx,
+                'label': label
+            })
+    if not filtered_sentences:
+        return 'symbol_not_exist', None
+    return 'success', filtered_sentences
+
 def list_tex_dest_paths(root):
     html_root = root + '/html_files'
     tex_root = root + '/tex_files'
