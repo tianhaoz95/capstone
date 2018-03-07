@@ -27,3 +27,11 @@ Once completed, the output html files will be placed in `data/html_files`
 Go to the root dir of the project, run `./run_tools.sh`
 
 Then the labeling tool will automatically open in default browser (chrome recommended).
+
+<img width="75%" src="https://raw.githubusercontent.com/tianhaoz95/pics/master/Screen%20Shot%202018-03-07%20at%202.01.21%20PM.png" />
+
+where search will search all the sentences containing the symbol of choice within the document of choice.
+
+<img width="75%" src="https://github.com/tianhaoz95/pics/blob/master/Screen%20Shot%202018-03-07%20at%202.01.51%20PM.png" />
+
+Here is an example of search results, you can edit the labels as strings. To save the changes in json file. "Save to overall" will save it to the overall json file with many documents in it. "Save to separate" will save it to a separate file named as `[document_name]_[symbol_expression].json`. "Save to both" will literally do both as the same time.
