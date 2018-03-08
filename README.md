@@ -1,5 +1,11 @@
 # Capstone Dataset Tools
 
+## What does it do?
+
+* convert tex to either html
+* parse html to sentences
+* GUI used to visualize and label sentences
+
 ## Prerequisites
 
 Install Latexml, instructions can be found [here](https://dlmf.nist.gov/LaTeXML/get.html)
