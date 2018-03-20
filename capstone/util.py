@@ -9,12 +9,16 @@ def filter_by_doc_symbol(dataset, symbol_detector, doc_name, symbol_expr):
         return 'doc_not_exist', None
     doc = dataset[doc_name]
     filtered_sentences = []
-    for sentence in doc:
+    for i, sentence in enumerate(doc):
         expr = sentence['expr']
         sentence_idx = sentence['sentence_idx']
         label = sentence['label']
         if symbol_detector.detect_symbol(expr, symbol_expr):
+            prev_sentence = doc[i-1]['expr'] if i!=0 else '[DOC BEGIN]'
+            next_sentence = doc[i+1]['expr'] if i!=len(doc)-1 else '[DOC END]'
             filtered_sentences.append({
+                'prev': prev_sentence,
+                'next': next_sentence,
                 'expr': expr,
                 'sentence_idx': sentence_idx,
                 'label': label

@@ -1,0 +1,76 @@
+{
+  "doc_name": "transfer_learning",
+  "symbol_expr": "Delta",
+  "sentences": [
+    {
+      "type": "text",
+      "expr": "Let us consider the first order Taylor series expansion of a function  $f:\\mathbb{R}^{D}\\rightarrow\\mathbb{R}$  around a small neighborhood  $\\{\\mathbf{x}+\\Delta\\mathbf{x}:\\|\\Delta\\mathbf{x}\\|\\leq\\epsilon\\}$ ",
+      "word_idx": 7561,
+      "sentence_idx": 95,
+      "label": "definition"
+    },
+    {
+      "type": "math",
+      "expr": "$$\\{\\mathbf{x}+\\Delta\\mathbf{x}:\\|\\Delta\\mathbf{x}\\|\\leq\\epsilon\\}$$",
+      "word_idx": 7827,
+      "sentence_idx": 98,
+      "label": "definition"
+    },
+    {
+      "type": "text",
+      "expr": "$\\displaystyle f(\\mathbf{x}+\\Delta\\mathbf{x})$",
+      "word_idx": 7891,
+      "sentence_idx": 99,
+      "label": "none"
+    },
+    {
+      "type": "math",
+      "expr": "$$\\displaystyle f(\\mathbf{x}+\\Delta\\mathbf{x})$$",
+      "word_idx": 7937,
+      "sentence_idx": 100,
+      "label": "none"
+    },
+    {
+      "type": "text",
+      "expr": "$\\displaystyle=f(\\mathbf{x})+\\nabla_{x}f(\\mathbf{x})^{T}(\\Delta\\mathbf{x})+%\n\\mathcal{O}(\\epsilon^{2})$",
+      "word_idx": 7981,
+      "sentence_idx": 101,
+      "label": "none"
+    },
+    {
+      "type": "math",
+      "expr": "$$\\displaystyle=f(\\mathbf{x})+\\nabla_{x}f(\\mathbf{x})^{T}(\\Delta\\mathbf{x})+%\n\\mathcal{O}(\\epsilon^{2})$$",
+      "word_idx": 8084,
+      "sentence_idx": 102,
+      "label": "none"
+    },
+    {
+      "type": "text",
+      "expr": " ;  $f(\\mathbf{x}+\\Delta\\mathbf{x})=f(\\mathbf{x})+\\nabla_{x}f(\\mathbf{x})^{T}(%\n\\Delta\\mathbf{x})$ ,  i",
+      "word_idx": 9049,
+      "sentence_idx": 111,
+      "label": "none"
+    },
+    {
+      "type": "text",
+      "expr": " ;  $\\mathbf{x}$  and  $\\Delta\\mathbf{x}$  lie on the same linear surface",
+      "word_idx": 9152,
+      "sentence_idx": 112,
+      "label": "none"
+    },
+    {
+      "type": "math",
+      "expr": "$$f(\\mathbf{x}+\\Delta\\mathbf{x})=f(\\mathbf{x})+\\nabla_{x}f(\\mathbf{x})^{T}(%\n\\Delta\\mathbf{x})$$",
+      "word_idx": 9277,
+      "sentence_idx": 116,
+      "label": "none"
+    },
+    {
+      "type": "math",
+      "expr": "$$\\Delta\\mathbf{x}$$",
+      "word_idx": 9379,
+      "sentence_idx": 118,
+      "label": "unknown"
+    }
+  ]
+}

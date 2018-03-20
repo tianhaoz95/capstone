@@ -44,12 +44,14 @@
           <div class="card-body">
             <div class="row">
               <div class="col">
-                <div>{{sentence.expr}}</div>
+                <div class="prev_expr">... {{sentence.prev}}</div>
+                <div class="curr_expr">{{sentence.expr}}</div>
+                <div class="next_expr">{{sentence.next}} ...</div>
               </div>
               <div class="col">
                 <div class="form-group">
                   <label>Label</label>
-                  <input type="text" name="{{sentence.sentence_idx}}" class="form-control" value="{{sentence.label}}" />
+                  <input type="text" name="{{sentence.sentence_idx}}" class="form-control label-field" value="{{sentence.label}}" />
                 </div>
               </div>
             </div>
