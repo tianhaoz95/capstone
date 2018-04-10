@@ -1,5 +1,9 @@
 # Capstone Dataset Tools
 
+## Status
+
+[![CircleCI](https://circleci.com/gh/tianhaoz95/capstone.svg?style=svg)](https://circleci.com/gh/tianhaoz95/capstone)
+
 ## What does it do?
 
 * convert tex to either html
