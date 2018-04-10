@@ -6,6 +6,7 @@ capstonenv
 /data/tex_files/*
 /data/xml_files/*
 /data/json_files/*
+/data/outputs/*
 !/data/html_files/README.md
 !/data/json_files/README.md
 !/data/tex_files/README.md

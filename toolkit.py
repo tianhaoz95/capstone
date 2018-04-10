@@ -1,10 +1,13 @@
 from flask import Flask
 from flask import render_template
 from flask import request
+from threading import Thread
 from capstone.store import *
 from capstone.config import *
 from capstone.util import *
 import webbrowser
+import time
+import numpy
 
 url = 'http://127.0.0.1:5000/'
 
@@ -18,10 +21,36 @@ current_symbol_expr = None
 
 symbol_detector = SymbolDetector(symlist_filename=symlist_filename)
 
-webbrowser.open_new(url)
+@app.route('/', methods=['GET'])
+def home():
+    if request.method == 'GET':
+        return render_template('home_page.html')
+    return render_template('error.html')
 
-@app.route('/', methods=['POST', 'GET'])
-def labeling():
+def dummy_rank(sentences):
+    cpy = sentences.copy()
+    numpy.random.shuffle(cpy)
+    return cpy
+
+@app.route('/search', methods=['POST', 'GET'])
+def searching():
+    doc_list = dataset.keys()
+    if request.method == 'GET':
+        return render_template('search.html', sentence_list=[], doc_list=doc_list)
+    if request.method == 'POST':
+        doc_name = request.form['doc_name']
+        symbol_expr = request.form['symbol_expr']
+        code, filtered_sentences = filter_by_doc_symbol(dataset=dataset,
+            symbol_detector=symbol_detector, doc_name=doc_name, symbol_expr=symbol_expr)
+        if code == 'success':
+            ranked_sentences = dummy_rank(filtered_sentences)
+            return render_template('search.html', sentence_list=ranked_sentences, doc_list=doc_list)
+        if code == 'symbol_not_exist':
+            return render_template('search.html', sentence_list=[], doc_list=doc_list)
+    return render_template('error.html')
+
+@app.route('/label', methods=['POST', 'GET'])
+def label():
     global current_doc_name
     global current_symbol_expr
     if request.method == 'GET':
@@ -93,4 +122,14 @@ def labeling():
             output_filename = output_root + '/' + current_doc_name + '_' + symbol_field + '.json'
             save_to_file(file_format='json', filename=output_filename, data=output_data)
             return render_template('label_tools.html', sentence_list=[])
-        return 'Error'
+        return render_template('error.html')
+
+def open_browser():
+    print('Starting browser ...')
+    time.sleep(1)
+    webbrowser.open_new(url)
+
+if __name__ == '__main__':
+    browser_t = Thread(target=open_browser)
+    browser_t.start()
+    app.run()

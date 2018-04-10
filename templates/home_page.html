@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% include "header.html" %}
+
+<body>
+
+<div class="jumbotron top-container">
+  <h1 class="display-8">Generating Explanations for Mathematical Expressions</h1>
+  <p class="lead">
+    This is a set of tools for labeling training and searching mathematical expressions
+  </p>
+  <hr class="my-4">
+  <p>
+    Click on one of the buttons to go to the tools
+  </p>
+  <div class="row">
+    <div class="col">
+      <p class="lead">
+        <a class="btn btn-primary btn-lg home-button"
+        role="button"
+        id="opensearch">
+          Search
+        </a>
+      </p>
+    </div>
+    <div class="col">
+      <p class="lead">
+        <a class="btn btn-primary btn-lg home-button"
+        role="button"
+        target="_blank"
+        href="http://127.0.0.1:5000/label">
+          Label
+        </a>
+      </p>
+    </div>
+    <div class="col">
+      <p class="lead">
+        <a class="btn btn-primary btn-lg home-button"
+        role="button">
+          Train
+        </a>
+      </p>
+    </div>
+    <div class="col">
+      <p class="lead">
+        <a class="btn btn-primary btn-lg home-button"
+        role="button">
+          Add Doc
+        </a>
+      </p>
+    </div>
+  </div>
+</div>
+
+{% include "footer.html" %}
+
+</body>
+</html>

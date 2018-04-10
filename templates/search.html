@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% include "header.html" %}
+
+<body>
+<form method="post">
+  <div class="row">
+    <select name="doc_name"
+      class="form-control form-control-sm search-dropdown"
+      type="text"
+      placeholder="Please select the document">
+      {% for doc in doc_list %}
+        <option>{{doc}}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="row">
+    <div class="col">
+      <input type="text"
+        name="symbol_expr"
+        class="form-control"
+        placeholder="Enter symbol expression"/>
+    </div>
+    <div class="col">
+      <button
+        type="submit"
+        name="btn_name"
+        class="btn btn-primary fullbtn"
+        value="search"/>
+        Search
+      </button>
+    </div>
+  </div>
+</form>
+
+{% for sentence in sentence_list %}
+  <div class="card exprcard-search">
+    <div class="card-body exprcard-search-body">
+      <p class="prev_expr">...{{sentence.prev}}</p>
+      <p class="curr_expr">{{sentence.expr}}</p>
+      <p class="next_expr">{{sentence.next}}...</p>
+    </div>
+  </div>
+{% endfor %}
+
+{% include "footer.html" %}
+
+</body>
+</html>
