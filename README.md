@@ -2,7 +2,13 @@
 
 ## Status
 
+Building:
+
 [![CircleCI](https://circleci.com/gh/tianhaoz95/capstone.svg?style=svg)](https://circleci.com/gh/tianhaoz95/capstone)
+
+Coverage:
+
+[![codebeat badge](https://codebeat.co/badges/30652e8d-9540-40ad-b49f-981310baed78)](https://codebeat.co/projects/github-com-tianhaoz95-capstone-master)
 
 ## What does it do?
 
