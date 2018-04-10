@@ -1,7 +1,7 @@
 import unittest
 from capstone import util
 
-detector = util.SymbolDetector()
+detector = util.SymbolDetector('data/symlist.txt')
 
 test_sentence1 = 'This is a test for \\alpha and \\beta, see how it works.'
 test_sentence2 = 'This is a test for \\a and \\b, see how it works.'
