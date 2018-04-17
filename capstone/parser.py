@@ -6,6 +6,37 @@ def parse_to_array(html_path, math_len_limit=3, text_len_limit=5):
     word_cnt = 0
     sentence_cnt = 0
     sentences = []
+    raw_sentences = []
+    str_word_cnt = 0
+    str_sentence_cnt = 0
+    for seg in html_file.find_all(include_tags):
+        if seg.name == 'math':
+            str_seg = ''
+            for agg_str in seg.stripped_strings:
+                str_seg += agg_str
+            if len(str_seg) > text_len_limit:
+                raw_sentences.append({
+                    'str': str_seg,
+                    'word_idx': str_word_cnt,
+                    'sentence_idx': str_word_cnt,
+                    'label': 'unlabeled'
+                })
+            str_word_cnt = str_sentence_cnt + 1
+            str_word_cnt = str_word_cnt + len(str_seg)
+        else:
+            full_str = ''
+            for agg_str in seg.stripped_strings:
+                full_str += agg_str
+            for str_seg in full_str.split('.'):
+                if len(str_seg) > text_len_limit:
+                    raw_sentences.append({
+                        'str': str_seg,
+                        'word_idx': str_word_cnt,
+                        'sentence_idx': str_word_cnt,
+                        'label': 'unlabeled'
+                    })
+                str_word_cnt = str_sentence_cnt + 1
+                str_word_cnt = str_word_cnt + len(str_seg)
     for seg in html_file.find_all(include_tags):
         if seg.name == 'math':
             expr = seg['alttext']
@@ -43,4 +74,4 @@ def parse_to_array(html_path, math_len_limit=3, text_len_limit=5):
                     sentences.append(elt)
                     word_cnt += len(expr)
                     sentence_cnt += 1
-    return sentences
+    return sentences, raw_sentences
