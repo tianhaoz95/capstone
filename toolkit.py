@@ -5,6 +5,7 @@ from threading import Thread
 from capstone.store import *
 from capstone.config import *
 from capstone.util import *
+from capstone.rank import *
 import webbrowser
 import time
 import numpy
@@ -27,11 +28,6 @@ def home():
         return render_template('home_page.html')
     return render_template('error.html')
 
-def dummy_rank(sentences):
-    cpy = sentences.copy()
-    numpy.random.shuffle(cpy)
-    return cpy
-
 @app.route('/search', methods=['POST', 'GET'])
 def searching():
     doc_list = dataset.keys()
@@ -43,10 +39,15 @@ def searching():
         code, filtered_sentences = filter_by_doc_symbol(dataset=dataset,
             symbol_detector=symbol_detector, doc_name=doc_name, symbol_expr=symbol_expr)
         if code == 'success':
-            ranked_sentences = dummy_rank(filtered_sentences)
-            return render_template('search.html', sentence_list=ranked_sentences, doc_list=doc_list)
+            senFile = {
+                'doc_name': doc_name,
+                'symbol_expr': symbol_expr,
+                'sentences': filtered_sentences,
+            }
+            ranked_sentences = rank(senFile, algoName = 'ML' ,prob = True, threshold = 0.45)
+            return render_template('search.html', sentence_list=ranked_sentences, doc_list=doc_list, doc_name=doc_name, symbol_expr=symbol_expr)
         if code == 'symbol_not_exist':
-            return render_template('search.html', sentence_list=[], doc_list=doc_list)
+            return render_template('search.html', sentence_list=[], doc_list=doc_list, doc_name=doc_name, symbol_expr=symbol_expr)
     return render_template('error.html')
 
 @app.route('/label', methods=['POST', 'GET'])

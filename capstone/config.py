@@ -10,3 +10,5 @@ json_output_filename = json_files_root + '/output.json'
 symlist_filename = 'data/symlist.txt'
 
 output_root = data_root + '/outputs'
+
+model_filename = data_root + '/model_files/prob_ML_cv.sav'

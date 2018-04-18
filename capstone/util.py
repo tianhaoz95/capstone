@@ -17,6 +17,7 @@ def filter_by_doc_symbol(dataset, symbol_detector, doc_name, symbol_expr):
             prev_sentence = doc[i-1]['expr'] if i!=0 else '[DOC BEGIN]'
             next_sentence = doc[i+1]['expr'] if i!=len(doc)-1 else '[DOC END]'
             filtered_sentences.append({
+                'type': "text",
                 'prev': prev_sentence,
                 'next': next_sentence,
                 'expr': expr,
