@@ -81,6 +81,21 @@ def load_html_file(filename):
         soup = BeautifulSoup(html_file, 'html.parser')
     return soup
 
+def convert_html_file(root):
+    soup = None
+    with open(os.path.join(root, 'output.html')) as html_file:
+        soup = BeautifulSoup(html_file, 'html.parser')
+    footer = None
+    with open('capstone/extra_footer.html', 'r') as footer_file:
+        footer = BeautifulSoup(footer_file, 'html.parser')
+    header = None
+    with open('capstone/extra_header.html', 'r') as header_file:
+        header = BeautifulSoup(header_file, 'html.parser')
+    soup.body.insert(len(soup.body.contents), footer)
+    soup.head.insert(len(soup.head.contents), header)
+    with open(os.path.join(root, 'converted.html'), 'w') as converted_file:
+        converted_file.write(soup.prettify())
+
 def extract_elements(html_file, handlers):
     tags = html_file.find_all(handlers.keys())
     outputs = []

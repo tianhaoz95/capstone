@@ -40,10 +40,12 @@ def parse_to_array(html_path, math_len_limit=3, text_len_limit=5):
     for seg in html_file.find_all(include_tags):
         if seg.name == 'math':
             expr = seg['alttext']
+            raw_expr = ''.join(r for r in seg.stripped_strings)
             if len(expr) >= math_len_limit:
                 elt = {
                     'type': 'math',
                     'expr': '$$' + expr + '$$',
+                    'raw_expr': raw_expr,
                     'word_idx': word_cnt,
                     'sentence_idx': sentence_cnt,
                     'label': 'unlabeled'
@@ -53,20 +55,28 @@ def parse_to_array(html_path, math_len_limit=3, text_len_limit=5):
                 sentence_cnt += 1
         else:
             seg_expr = ''
+            raw_expr = ''
             for segc in seg.children:
+                expr = ''
                 if segc.name == 'math':
                     math_expr = segc['alttext'].replace('.', '')
                     expr = '$' + math_expr + '$'
+                    raw_expr = raw_expr + ' ' + ' '.join(r.replace('.', '') for r in segc.stripped_strings)
                 else:
-                    expr = segc.string
+                    if hasattr(segc, 'stripped_strings'):
+                        expr = ' '.join(r for r in segc.stripped_strings)
+                        raw_expr = raw_expr + ' ' + ' '.join(r for r in segc.stripped_strings)
                 if expr and expr != '\n' and expr != '$$' and expr != '$\n$':
                     seg_expr = seg_expr + ' ' + expr
             exprs = seg_expr.strip().split('.')
-            for expr in exprs:
+            rexprs = raw_expr.strip().split('.')
+            for idx, expr in enumerate(exprs):
                 if len(expr) >= text_len_limit:
+                    rexpr = rexprs[idx] if idx < len(exprs) else 'off-by-one'
                     elt = {
                         'type': 'text',
                         'expr': expr,
+                        'raw_expr': rexpr,
                         'word_idx': word_cnt,
                         'sentence_idx': sentence_cnt,
                         'label': 'unlabeled'

@@ -7,12 +7,17 @@ from capstone.config import *
 from capstone.util import *
 from capstone.rank import *
 import webbrowser
+import subprocess
 import time
 import numpy
+import os
+from flask_cors import CORS
 
 url = 'http://127.0.0.1:5000/'
 
 app = Flask(__name__)
+
+CORS(app)
 
 dataset = load_from_file(file_format='json', filename=json_output_filename)
 
@@ -28,8 +33,55 @@ def home():
         return render_template('home_page.html')
     return render_template('error.html')
 
+@app.route('/demo', methods=['POST', 'GET'])
+def demo():
+    doc_list = dataset.keys()
+    if request.method == 'GET':
+        return render_template('demo.html', sentence_list=[], doc_list=doc_list)
+    if request.method == 'POST':
+        doc_name = request.form['doc_name']
+        symbol_expr = request.form['symbol_expr']
+        code, filtered_sentences = filter_by_doc_symbol(dataset=dataset,
+            symbol_detector=symbol_detector, doc_name=doc_name, symbol_expr=symbol_expr)
+        if code == 'success':
+            senFile = {
+                'doc_name': doc_name,
+                'symbol_expr': symbol_expr,
+                'sentences': filtered_sentences,
+            }
+            ranked_sentences = rank(senFile, algoName = 'ML' ,prob = True, threshold = 0.45)
+            return render_template('demo.html', sentence_list=ranked_sentences, doc_list=doc_list, doc_name=doc_name, symbol_expr=symbol_expr)
+        if code == 'symbol_not_exist':
+            return render_template('demo.html', sentence_list=[], doc_list=doc_list, doc_name=doc_name, symbol_expr=symbol_expr)
+    return render_template('error.html')
+
+@app.route('/searchapi/<string:doc_name>/<string:symbol_expr>', methods=['GET'])
+def search_api(doc_name, symbol_expr):
+    print(doc_name, symbol_expr)
+    code, filtered_sentences = filter_by_doc_symbol(dataset=dataset,
+        symbol_detector=symbol_detector, doc_name=doc_name, symbol_expr=symbol_expr)
+    if code == 'success':
+        senFile = {
+            'doc_name': doc_name,
+            'symbol_expr': symbol_expr,
+            'sentences': filtered_sentences,
+        }
+        # ranked_sentences = rank(senFile, algoName = 'ML' ,prob = True, threshold = 0.45)
+        html_res = ''
+        for sentence in filtered_sentences:
+            html_res += '<div class=\"card exprcard-search\"><div class=\"card-body exprcard-search-body\"><p class=\"prev_expr\">...'
+            html_res += sentence['prev']
+            html_res += '</p><p class=\"curr_expr\">'
+            html_res += sentence['expr']
+            html_res += '</p><p class=\"next_expr\">'
+            html_res += sentence['next']
+            html_res += '...</p></div></div>'
+        return html_res
+    else:
+        return "<p>Not found</p>"
+
 @app.route('/search', methods=['POST', 'GET'])
-def searching():
+def search():
     doc_list = dataset.keys()
     if request.method == 'GET':
         return render_template('search.html', sentence_list=[], doc_list=doc_list)
@@ -130,7 +182,15 @@ def open_browser():
     time.sleep(1)
     webbrowser.open_new(url)
 
+def start_static_server():
+    current_dir = os.getcwd()
+    env = os.environ
+    os.chdir(os.path.join(current_dir, 'data/html_files'))
+    proc = subprocess.Popen(['python', '-m', 'http.server', '8080'], env=env)
+    os.chdir(current_dir)
+
 if __name__ == '__main__':
+    start_static_server()
     browser_t = Thread(target=open_browser)
     browser_t.start()
     app.run()

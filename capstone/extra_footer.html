@@ -1,3 +1,14 @@
+<div id="my_popup">
+
+  <div id="popover-content">
+    Loading
+  </div>
+
+  <!-- Add an optional button to close the popup -->
+  <button id="close-popover" type="button" class="btn btn-primary my_popup_close">Close</button>
+
+</div>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
@@ -28,11 +39,25 @@
     console.log("selection: ", window.getSelection().toString())
     selection = window.getSelection().toString()
     if (selection.length > 0) {
+      $("#popover-content").html("<p>loading</p>")
       $('#my_popup').popup('toggle');
-      $.get("http://127.0.0.1:5000/searchapi", function (res) {
+      var current_url = window.location.href;
+      var fields = current_url.split('/');
+      var pdf_name = fields[fields.length - 2];
+      var base_url = "http://127.0.0.1:5000/searchapi";
+      var full_url = base_url + "/" + pdf_name + "/" + selection.replace('/', '[slash]');
+      console.log('calling: ', full_url)
+      $.get(full_url, function (res) {
         console.log(res)
+        $("#popover-content").html(res)
       });
     }
+  });
+</script>
+
+<script>
+  $("#close-popover").click(function () {
+    $("#popover-content").html("<p>loading</p>")
   });
 </script>
 
