@@ -24,13 +24,13 @@
           Papers
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <a class="dropdown-item"
-            target="_blank"
-            href="http://localhost:8080/faster_rcnn/converted.html">
-            Action
-          </a>
-          <a class="dropdown-item" href="#">Another action</a>
-          <a class="dropdown-item" href="#">Something else here</a>
+          {% for menu_item in doc_menu %}
+            <a class="dropdown-item"
+              target="_blank"
+              href="{{menu_item.url}}">
+              {{menu_item.display_name}}
+            </a>
+          {% endfor %}
         </div>
       </div>
     </div>

@@ -27,10 +27,21 @@ current_symbol_expr = None
 
 symbol_detector = SymbolDetector(symlist_filename=symlist_filename)
 
+hints = ['popover', 'floating']
+
 @app.route('/', methods=['GET'])
 def home():
     if request.method == 'GET':
-        return render_template('home_page.html')
+        doc_menu = []
+        for doc_name in dataset.keys():
+            for hint in hints:
+                display_name = doc_name + '(' + hint + ')'
+                url = 'http://localhost:8080/' + doc_name + '/' + hint + '.html'
+                doc_menu.append({
+                    'display_name': display_name,
+                    'url': url
+                })
+        return render_template('home_page.html', doc_menu=doc_menu)
     return render_template('error.html')
 
 @app.route('/demo', methods=['POST', 'GET'])
@@ -67,16 +78,7 @@ def search_api(doc_name, symbol_expr):
             'sentences': filtered_sentences,
         }
         # ranked_sentences = rank(senFile, algoName = 'ML' ,prob = True, threshold = 0.45)
-        html_res = ''
-        for sentence in filtered_sentences:
-            html_res += '<div class=\"card exprcard-search\"><div class=\"card-body exprcard-search-body\"><p class=\"prev_expr\">...'
-            html_res += sentence['prev']
-            html_res += '</p><p class=\"curr_expr\">'
-            html_res += sentence['expr']
-            html_res += '</p><p class=\"next_expr\">'
-            html_res += sentence['next']
-            html_res += '...</p></div></div>'
-        return html_res
+        return render_template('results.html', sentence_list=filtered_sentences)
     else:
         return "<p>Not found</p>"
 
@@ -179,7 +181,7 @@ def label():
 
 def open_browser():
     print('Starting browser ...')
-    time.sleep(1)
+    time.sleep(3)
     webbrowser.open_new(url)
 
 def start_static_server():
@@ -189,7 +191,15 @@ def start_static_server():
     proc = subprocess.Popen(['python', '-m', 'http.server', '8080'], env=env)
     os.chdir(current_dir)
 
+def augment_html_files():
+    tex_filenames, html_filenames, tex_paths, html_paths, tex_names = list_tex_dest_paths('data')
+    for html_path, tex_name in zip(html_paths, tex_names):
+        for hint in hints:
+            print('converting ', hint, ' version for ', tex_name, '...')
+            convert_html_file(html_path, hint)
+
 if __name__ == '__main__':
+    augment_html_files()
     start_static_server()
     browser_t = Thread(target=open_browser)
     browser_t.start()

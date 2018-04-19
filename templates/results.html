@@ -1,0 +1,9 @@
+{% for sentence in sentence_list %}
+  <div class="card exprcard-search">
+    <div class="card-body exprcard-search-body">
+      <p class="prev_expr">...{{sentence.prev}}</p>
+      <p class="curr_expr">{{sentence.expr}}</p>
+      <p class="next_expr">{{sentence.next}}...</p>
+    </div>
+  </div>
+{% endfor %}

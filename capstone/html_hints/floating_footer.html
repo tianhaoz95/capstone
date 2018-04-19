@@ -1,0 +1,75 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+
+<!-- loading jsPanel javascript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspanel3/3.11.1/jquery.jspanel-compiled.js"></script>
+
+<script>
+  $("html").click(function () {
+    console.log("selection: ", window.getSelection().toString())
+    selection = window.getSelection().toString()
+    if (selection.length > 0) {
+      window.getSelection().empty();
+      var term = selection.replace('/', '[slash]')
+      var current_url = window.location.href;
+      var fields = current_url.split('/');
+      var pdf_name = fields[fields.length - 2];
+      var base_url = "http://127.0.0.1:5000/searchapi";
+      var full_url = base_url + "/" + pdf_name + "/" + term;
+      confirmation = "<h6>Do you want to search " + term + " in " + pdf_name + "?</h6>";
+      yes_btn = "<button style=\"margin:10px;\" id=\"yes-btn\" class=\"btn btn-success\">Yes</button>";
+      no_btn = "<button style=\"margin:10px;\" id=\"no-btn\" class=\"btn btn-danger\">No</button>";
+      full_content = "<div style=\"text-align:center;\">" + confirmation + yes_btn + no_btn + "</div>";
+      $.jsPanel({
+          paneltype:   'modal',
+          contentSize: {
+            width:  400,
+            height: 150
+          },
+          headerTitle: 'Confirm',
+          show:        'animated fadeInDownBig',
+          theme:       "rebeccapurple",
+          content:     full_content,
+          callback:    function (panel) {
+            $("#no-btn", this.content).click(function() {
+              panel.close();
+            });
+            $("#yes-btn", this.content).click(function(){
+              $.jsPanel({
+              	position: {
+                	my: "left-top",
+                  at: "left-top"
+                },
+                contentSize: {
+                	width:  600,
+                  height: 350
+                },
+                contentOverflow: "scroll",
+                content: "<p>Loading ...</p>",
+                contentAjax: {
+                	url:  full_url,
+                  done: function (data, textStatus, jqXHR, panel) {
+                  	// the keyword "this" inside the function refers to the panel
+                    this.content.html(data)
+                  },
+                  fail: function (jqXHR, textStatus, errorThrown, panel) {
+                  	//the keyword "this" inside the function refers to the panel
+                    this.content.html("<p>Cannot connect to server</p>")
+                  }
+                },
+                headerTitle: "search results",
+                theme:       "rebeccapurple",
+                callback: function (secondary_panel) {
+                	// do whatever you like
+                  // the keyword "this" inside the callback function refers to the panel
+                }
+              });
+              panel.close()
+            });
+          }
+      });
+    }
+  });
+</script>
